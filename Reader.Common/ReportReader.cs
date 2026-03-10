@@ -1,6 +1,7 @@
 using System;
 using System.IO;
 using System.IO.Compression;
+using System.Linq;
 using System.Text.Json;
 using System.Threading.Tasks;
 
@@ -59,5 +60,23 @@ namespace Reader.Common {
             ArgumentNullException.ThrowIfNull(rtn);
             return rtn;
         }
+
+        public static Data.Models.Report ConvertToDB(Report report) =>
+            new Data.Models.Report() {
+                OrganizationName = report.OrganizationName,
+                StartDate = report.DateRange?.Start,
+                EndDate = report.DateRange?.End,
+                ContactInfo = report.ContactInfo,
+                ReportID = report.ReportID,
+                Policies = report.Policies?.Select(container => new Data.Models.ReportPolicy() {
+                    PolicyType = container.Policy?.PolicyType,
+                    PolicyStrings = container.Policy?.PolicyString == null ? null : string.Join(';', container.Policy?.PolicyString ?? []),
+                    PolicyDomain = container.Policy?.PolicyDomain,
+                    MXHosts = container.Policy?.MXHost == null ? null : string.Join(';', container.Policy?.MXHost ?? []),
+                    FailureDetails = container.FailureDetails == null ? null : string.Join(';', container.FailureDetails),
+                    TotalSuccessfulSessionCount = container.Summary?.TotalSuccessfulSessionCount,
+                    TotalFailureSessionCount = container.Summary?.TotalFailureSessionCount,
+                }).ToList(),
+            };
     }
 }
