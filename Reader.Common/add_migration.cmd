@@ -1,2 +1,2 @@
 @cd %~dp0
-dotnet ef migrations add %* --project Reader.Common --context Redaer.Common.Data.DBContext -o Data/Migrations
+dotnet ef migrations add %* --context Reader.Common.Data.DBContext -o Data/Migrations
