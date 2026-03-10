@@ -27,6 +27,8 @@ namespace Reader.Common {
         public PolicyValue? Policy { get; set; }
         [JsonPropertyName("summary")]
         public PolicySummary? Summary { get; set; }
+        [JsonPropertyName("failure-details")]
+        public List<object>? FailureDetails { get; set; }
     }
     public class PolicyValue {
         [JsonPropertyName("policy-type")]

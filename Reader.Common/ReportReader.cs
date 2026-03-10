@@ -27,11 +27,29 @@ namespace Reader.Common {
                 ) {
                     stream.Position = 0;
                     using var gZipStream = new GZipStream(stream, CompressionMode.Decompress);
-                    return await read(gZipStream);
+                    try {
+                        return await read(gZipStream);
+                    } catch (JsonException) {
+                        Console.WriteLine("Failed to parse JSON:");
+                        stream.Position = 0;
+                        var sr = new StreamReader(gZipStream);
+                        Console.WriteLine(sr.ReadToEnd());
+
+                        throw;
+                    }
 
                 } else {
                     stream.Position = 0;
-                    return await read(stream);
+                    try {
+                        return await read(stream);
+                    } catch (JsonException) {
+                        Console.WriteLine("Failed to parse JSON:");
+                        stream.Position = 0;
+                        var sr = new StreamReader(stream);
+                        Console.WriteLine(sr.ReadToEnd());
+
+                        throw;
+                    }
                 }
             }
         }
