@@ -12,7 +12,7 @@ using Reader.Common.Data;
 namespace Reader.Common.Data.Migrations
 {
     [DbContext(typeof(DBContext))]
-    [Migration("20260310095452_Added Report table")]
+    [Migration("20260323140902_Added Report table")]
     partial class AddedReporttable
     {
         /// <inheritdoc />
@@ -246,7 +246,14 @@ namespace Reader.Common.Data.Migrations
                     b.Property<DateTimeOffset?>("StartDate")
                         .HasColumnType("datetimeoffset");
 
+                    b.Property<string>("UniqueReportID")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
                     b.HasKey("ID");
+
+                    b.HasIndex("UniqueReportID")
+                        .IsUnique();
 
                     b.ToTable("Reports");
                 });

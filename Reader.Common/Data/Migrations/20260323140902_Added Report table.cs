@@ -17,6 +17,7 @@ namespace Reader.Common.Data.Migrations
                 {
                     ID = table.Column<long>(type: "bigint", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
+                    UniqueReportID = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     OrganizationName = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     StartDate = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true),
                     EndDate = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true),
@@ -58,6 +59,12 @@ namespace Reader.Common.Data.Migrations
                 name: "IX_ReportPolicies_ReportID",
                 table: "ReportPolicies",
                 column: "ReportID");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Reports_UniqueReportID",
+                table: "Reports",
+                column: "UniqueReportID",
+                unique: true);
         }
 
         /// <inheritdoc />

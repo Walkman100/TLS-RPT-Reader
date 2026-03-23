@@ -63,6 +63,7 @@ namespace Reader.Common {
 
         public static Data.Models.Report ConvertToDB(Report report) =>
             new Data.Models.Report() {
+                UniqueReportID = $"{report.OrganizationName}+{report.ReportID}",
                 OrganizationName = report.OrganizationName,
                 StartDate = report.DateRange?.Start,
                 EndDate = report.DateRange?.End,

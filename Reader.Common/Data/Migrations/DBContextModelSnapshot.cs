@@ -243,7 +243,14 @@ namespace Reader.Common.Data.Migrations
                     b.Property<DateTimeOffset?>("StartDate")
                         .HasColumnType("datetimeoffset");
 
+                    b.Property<string>("UniqueReportID")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
                     b.HasKey("ID");
+
+                    b.HasIndex("UniqueReportID")
+                        .IsUnique();
 
                     b.ToTable("Reports");
                 });
